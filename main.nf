@@ -12,7 +12,7 @@ workflow  {
     hap_B_ids = Channel.value(file(params.hap_B_ids))
     hap_U_ids = Channel.value(file(params.hap_U_ids))
 
-    seqtk(hap_A_ids, hap_B_ids, hap_U_ids, dad_sr, mom_sr, child_lr)
+    seqtk(hap_A_ids, hap_B_ids, hap_U_ids, child_lr)
 
     count_kmers(dad_sr, mom_sr, child_sr, child_lr)
 
