@@ -1,5 +1,6 @@
-include { get_hapmers } from './workflows/get_hapmers'
+include { count_kmers; get_hapmers } from './workflows/get_hapmers'
 include { seqtk } from './workflows/seqtk'
+
 
 workflow  {
     dad_sr = Channel.value(file(params.dad_short_reads))
@@ -9,7 +10,11 @@ workflow  {
     hap_A_ids = Channel.value(file(params.hap_A_ids))
     hap_B_ids = Channel.value(file(params.hap_B_ids))
     
-    seqtk(hap_A_ids, hap_B_ids, dad_sr, mom_sr)
-    get_hapmers(dad_sr, mom_sr, child_sr)
 
+    seqtk(hap_A_ids, hap_B_ids, dad_sr, mom_sr)
+    count_kmers(dad_sr, mom_sr, child_sr, child_lr)
+    get_hapmers(count_kmers.out.meryl_dad,
+        count_kmers.out.meryl_mom,
+        count_kmers.out.meryl_child_sr)
+    
 }
