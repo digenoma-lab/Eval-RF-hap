@@ -1,5 +1,5 @@
 include { count_kmers; get_hapmers } from './workflows/get_hapmers'
-include { seqtk } from './workflows/seqtk'
+include { assemble } from './workflows/assemble'
 include { eval_assembly } from './workflows/eval_assembly'
 
 workflow  {
@@ -12,7 +12,7 @@ workflow  {
     hap_dad_ids = Channel.value(file(params.hap_dad_ids))
     hap_unknown_ids = Channel.value(file(params.hap_unknown_ids))
 
-    seqtk(hap_mom_ids, hap_dad_ids, hap_unknown_ids, child_lr)
+    assemble(hap_mom_ids, hap_dad_ids, hap_unknown_ids, child_lr)
 
     count_kmers(dad_sr, mom_sr, child_sr, child_lr)
 
@@ -21,7 +21,7 @@ workflow  {
         count_kmers.out.meryl_child_sr)
 
     eval_assembly(get_hapmers.out.hapmers, count_kmers.out.meryl_child_lr,
-        seqtk.out.hap_mom_fastq, seqtk.out.hap_dad_fastq)
+        assemble.out.hap_mom_fastq, assemble.out.hap_dad_fastq)
 
     eval_assembly.out.view()
 }
