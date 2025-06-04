@@ -51,7 +51,8 @@ process hapmers{
     }
     else{
         """
-        sh \$MERQURY/trio/hapmers.sh  hapA.only.meryl hapB.only.meryl shrd.meryl
+        export MERQURY=/opt/conda/share/merqury
+        \$MERQURY/trio/hapmers.sh ${mom_counts} ${dad_counts} ${child_counts}
         """
     }
 }
