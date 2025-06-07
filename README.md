@@ -31,38 +31,6 @@ Eval-RF-hap/
 
 ---
 
-## Input Requirements
-
-The pipeline requires fastq files from a family trio:
-
-### Father:
-- `CHI_paternal_1.fq.gz`
-- `CHI_paternal_2.fq.gz`  
-Path example:
-```
-/mnt/beegfs/labs/DiGenomaLab/CANCER/GALLBADDER/data/CHILEAN/WGS/reseq/LG3_CHIA_*.fq.gz
-```
-
-### Mother:
-- `CHI_maternal_1.fq.gz`
-- `CHI_maternal_2.fq.gz`  
-Path example:
-```
-/mnt/beegfs/labs/DiGenomaLab/CANCER/GALLBADDER/data/CHILEAN/WGS/Rawdata2/LG2_CHIC_1.fq.gz
-```
-
-### Child (long-read data):
-- `CHID.NANO_08*.fastq.gz`
-- `CHIP.NANO_090*`  
-Path example:
-```
-/mnt/beegfs/labs/DiGenomaLab/Chilean_ref/SeqUOH/basecalling/fastq/
-```
-
-All input paths must be defined in the `params.yml` file.
-
----
-
 ## Installation
 
 Ensure you have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html) installed.

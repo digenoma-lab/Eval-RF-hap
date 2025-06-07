@@ -14,13 +14,13 @@ workflow  {
 
     assemble(hap_mom_ids, hap_dad_ids, hap_unknown_ids, child_lr)
 
-    count_kmers(dad_sr, mom_sr, child_sr, child_lr)
+    count_kmers(dad_sr, mom_sr, child_sr)
 
     get_hapmers(count_kmers.out.meryl_dad,
         count_kmers.out.meryl_mom,
         count_kmers.out.meryl_child_sr)
 
-    eval_assembly(get_hapmers.out.hapmers, count_kmers.out.meryl_child_lr,
+    eval_assembly(get_hapmers.out.hapmers, count_kmers.out.meryl_child_sr,
         assemble.out.hap_mom_fastq, assemble.out.hap_dad_fastq)
 
     eval_assembly.out.view()

@@ -10,19 +10,16 @@ workflow count_kmers {
   dad_short_reads
   mom_short_reads
   child_short_reads
-  child_long_reads
 
   main:
   count_kmers_dad(dad_short_reads)
   count_kmers_mom(mom_short_reads)
   count_kmers_child_sr(child_short_reads)
-  count_kmers_child_lr(child_long_reads)
 
   emit:
   meryl_dad = count_kmers_dad.out.counts_file
   meryl_mom = count_kmers_mom.out.counts_file
   meryl_child_sr = count_kmers_child_sr.out.counts_file
-  meryl_child_lr = count_kmers_child_lr.out.counts_file
 }
 
 workflow get_hapmers{

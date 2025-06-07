@@ -33,7 +33,7 @@ process hifiasm {
     else{
     """
     hifiasm -o ${hap_i_fastq.baseName}_merged.ont -l 3 --ont ${hap_i_fastq} ${hap_U_fastq} -t $task.cpus
-    gfatools gfa2fa ${hap_i_fastq.baseName}_merged.ont.bp.hap1.p_ctg.gfa > ${hap_i_fastq.baseName}_merged.fasta
+    gfatools gfa2fa ${hap_i_fastq.baseName}_merged.ont.bp.p_ctg.gfa > ${hap_i_fastq.baseName}_merged.fasta
     """
     }
 }

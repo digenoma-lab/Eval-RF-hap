@@ -1,7 +1,7 @@
 process merqury{
     input:
-    tuple path(hapmers_dad), path(hapmers_mom), path(hapmers_shared)
-    path(meryl_child_lr)
+    tuple path(hapmers_dad), path(hapmers_mom)
+    path(meryl_child_sr)
     path(hap_mom_fastq)
     path(hap_dad_fastq)
     output:
@@ -14,8 +14,7 @@ process merqury{
     }
     else{
         """
-        merqury.sh ${meryl_child_lr} ${hapmers_mom} ${hapmers_dad} ${hap_mom_fastq} \\
-        ${hap_dad_fastq} merqury_result.txt OMP_NUM_THREADS=$task.cpus
+        merqury.sh ${meryl_child_sr} ${hapmers_mom} ${hapmers_dad} ${hap_mom_fastq} ${hap_dad_fastq} merqury_result.txt OMP_NUM_THREADS=$task.cpus
         """
     }
 }
