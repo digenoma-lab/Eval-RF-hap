@@ -54,7 +54,7 @@ process yak_qv{
     }
     else{
         """
-        yak qv -t 16 -p -K 3.2g ${mom_yak} ${dad_yak} ${child_assembly_A} ${child_assembly_B} > yak.eval.txt
+        yak qv -t 16 -p -K 3.2g ${mom_yak} ${dad_yak} ${child_assembly_A} ${child_assembly_B} > yak_eval.txt
         """
     }
 
