@@ -10,7 +10,8 @@ process merqury{
     script:
     if (params.debug){
         """
-        echo "merqury" > merqury_result.txt
+        echo "merqury_result	1	1	1	1	1	1	1	1	0.1%" > merqury_result.hap_A_merged.100_20000.phased_block.stats
+        echo "merqury_result	1	1	1	1	1	1	1	1	0.1%" > merqury_result.hap_B_merged.100_20000.phased_block.stats
         """
     }
     else{

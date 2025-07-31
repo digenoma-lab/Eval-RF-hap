@@ -50,7 +50,7 @@ cd Eval-RF-hap
 2. Run the pipeline:
 
 ```bash
-nextflow run main.nf -params-file params.yml
+nextflow run main.nf -params-file params.yml -c nextflow.config 
 ```
 
 ---

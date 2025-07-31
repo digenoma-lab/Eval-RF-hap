@@ -1,0 +1,11 @@
+dad_short_reads_R1: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/dad/141008_D00360_0058_AHB675ADXX/Project_NA24694/Sample_NA24694/NA24694_R1_all.fastq.gz"
+dad_short_reads_R2: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/dad/141008_D00360_0058_AHB675ADXX/Project_NA24694/Sample_NA24694/NA24694_R2_all.fastq.gz"
+
+mom_short_reads_R1: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/mom/141008_D00360_0059_BHB66DADXX/Sample_NA24695/NA24695_CTTGTA_R1_all.fastq.gz"
+mom_short_reads_R2: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/mom/141008_D00360_0059_BHB66DADXX/Sample_NA24695/NA24695_CTTGTA_R2_all.fastq.gz"
+
+
+child_short_reads_R1: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/son/short/hg005_short_son_all_R1.fastq.gz"
+child_short_reads_R2: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/son/short/hg005_short_son_all_R2.fastq.gz"
+
+child_long_reads: "/mnt/beegfs/labs/DiGenomaLab/rfhap/latest_dami/latest_HG00_dataset/HG005/son/standar_ont/sup/SUP_HG005.fastq.gz"

@@ -4,6 +4,7 @@ process meryl_sr{
     output:
     path("${reads_R1.baseName}.count.meryl"), emit: counts_file
     script:
+    def memory = task.memory.toGiga()
     if (params.debug){
         """
         echo "meryl --help" > ${reads_R1.baseName}.count.meryl
@@ -11,7 +12,7 @@ process meryl_sr{
     }
     else{
         """
-        meryl threads=$task.cpus k=21 count $reads_R1 $reads_R2 output ${reads_R1.baseName}.count.meryl
+        meryl threads=$task.cpus k=21 memory=${memory} count $reads_R1 $reads_R2 output ${reads_R1.baseName}.count.meryl
         """
     }
 }
@@ -22,6 +23,7 @@ process meryl_lr{
     output:
     path("${reads.baseName}.count.meryl"), emit: counts_file
     script:
+    def memory = task.memory.toGiga()
     if (params.debug){
         """
         echo "meryl --help" > ${reads.baseName}.count.meryl
@@ -29,7 +31,7 @@ process meryl_lr{
     }
     else{
         """
-        meryl threads=$task.cpus k=21 count $reads output ${reads.baseName}.count.meryl
+        meryl threads=$task.cpus memory=${memory} k=21 count $reads output ${reads.baseName}.count.meryl
         """
     }
 }

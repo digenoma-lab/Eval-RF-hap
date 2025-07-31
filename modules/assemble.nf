@@ -19,21 +19,24 @@ process seqtk{
 }
 
 process hifiasm {
-    input:
-    path hap_i_fastq
-    path hap_U_fastq
-    output:
-    path "${hap_i_fastq.baseName}_merged.fasta", emit: hap_merged
-    script:
-    if(params.debug){
-    """
-    echo "merged ${hap_i_fastq.baseName} + U" > "${hap_i_fastq.baseName}_merged.fasta"
-    """
-    }
-    else{
-    """
-    hifiasm -o ${hap_i_fastq.baseName}_merged.ont -l 3 --ont ${hap_i_fastq} ${hap_U_fastq} -t $task.cpus
-    gfatools gfa2fa ${hap_i_fastq.baseName}_merged.ont.bp.p_ctg.gfa > ${hap_i_fastq.baseName}_merged.fasta
-    """
-    }
+  publishDir "$params.outdir/hifiasm/", mode: "copy"
+  input:
+  path hap_i_fastq
+  path hap_U_fastq
+  output:
+  path "${hap_i_fastq.baseName}_merged.fasta", emit: hap_merged
+  path "${hap_i_fastq.baseName}_merged*.gfa", emit: hap_gfa
+  path "${hap_i_fastq.baseName}_merged*.bed", emit: hap_bed
+  script:
+  if(params.debug){
+  """
+  echo "merged ${hap_i_fastq.baseName} + U" > "${hap_i_fastq.baseName}_merged.fasta"
+  """
+  }
+  else{
+  """
+  hifiasm -o ${hap_i_fastq.baseName}_merged.ont -l 3 --ont ${hap_i_fastq} ${hap_U_fastq} -t $task.cpus
+  gfatools gfa2fa ${hap_i_fastq.baseName}_merged.ont.bp.p_ctg.gfa > ${hap_i_fastq.baseName}_merged.fasta
+  """
+  }
 }
