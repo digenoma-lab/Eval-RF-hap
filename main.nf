@@ -14,10 +14,21 @@ workflow  {
     hap_dad_ids = Channel.value(file(params.hap_dad_ids))
     hap_unknown_ids = Channel.value(file(params.hap_unknown_ids))
 
-    //If yak is already made, we can skip the counting step
-    if(params.from_yak){
-        yak_mom = Channel.value(file(params.yak_mom))
-        yak_dad = Channel.value(file(params.yak_dad))
+    //Parameters depending on the tool
+    if(params.tool == "yak" || params.tool == "both"){
+        //If yak is already made, we can skip the counting step
+        if (params.from_yak){
+            yak_mom = Channel.value(file(params.yak_mom))
+            yak_dad = Channel.value(file(params.yak_dad))
+        }
+    }
+    if(params.tool == "merqury" || params.tool == "both"){
+        //If merqury is already made, we can skip the counting step
+        if (params.from_meryl){
+            meryl_dad = Channel.value(file(params.meryl_dad))
+            meryl_mom = Channel.value(file(params.meryl_mom))
+            meryl_child_sr = Channel.value(file(params.meryl_child_sr))
+        }
     }
 
     //If the assembly is already made, we can skip the assembly step
@@ -33,14 +44,23 @@ workflow  {
     }
 
     if (params.tool == "merqury" || params.tool == "both"){
-        count_kmers(dad_sr, mom_sr, child_sr)
-        get_hapmers(count_kmers.out.meryl_dad,
-            count_kmers.out.meryl_mom,
-            count_kmers.out.meryl_child_sr)
-        eval_assembly_merqury(get_hapmers.out.hapmers, count_kmers.out.meryl_child_sr,
+        if(!params.from_meryl){
+            //If meryl is not already made, let's count the kmers
+            count_kmers(dad_sr, mom_sr, child_sr)
+            meryl_dad = count_kmers.out.meryl_dad
+            meryl_mom = count_kmers.out.meryl_mom
+            meryl_child_sr = count_kmers.out.meryl_child_sr
+        }
+        //Now we can get the hapmers and evaluate the assembly with merqury
+        get_hapmers(meryl_dad,
+            meryl_mom,
+            meryl_child_sr)
+        eval_assembly_merqury(get_hapmers.out.hapmers, meryl_child_sr,
             hap_mom_fasta, hap_dad_fasta)
         eval_assembly_merqury.out.view()
     }
+    
+
     if (params.tool == "yak" || params.tool == "both"){
         if(params.from_yak){
             //If yak is already made, let's just use it
