@@ -2,7 +2,8 @@ include { count_kmers; get_hapmers } from './workflows/get_hapmers'
 include { assemble } from './workflows/assemble'
 include { eval_assembly_merqury; 
           eval_assembly_yak;
-          eval_assembly_yak_premade} from './workflows/eval_assembly'
+          eval_assembly_yak_premade;
+          eval_gfastats} from './workflows/eval_assembly'
 
 workflow  {
     dad_sr = Channel.value(tuple file(params.dad_short_reads_R1), file(params.dad_short_reads_R2))
@@ -32,6 +33,7 @@ workflow  {
     if(params.from_assembly){
         hap_mom_fasta = Channel.value(file(params.hap_mom_fasta))
         hap_dad_fasta = Channel.value(file(params.hap_dad_fasta))
+        
     }
     else{
         hap_mom_ids = Channel.value(file(params.hap_mom_ids))
@@ -77,4 +79,11 @@ workflow  {
             eval_assembly_yak.out.result_mom.view()
         }
     }
+
+    gfanoseq_hapA = Channel.value(file(params.gfa_noseq_hapA))
+    gfanoseq_hapB = Channel.value(file(params.gfa_noseq_hapB))
+
+
+    eval_gfastats(gfanoseq_hapA,gfanoseq_hapB)
+
 }

@@ -3,6 +3,7 @@ include {merqury;
     yak_count as yak_count_dad;
     yak_trioeval as yak_trioeval_mom;
     yak_trioeval as yak_trioeval_dad;
+    gfastats;
     } from "../modules/eval_assembly.nf"
 
 workflow eval_assembly_merqury{
@@ -62,4 +63,18 @@ workflow eval_assembly_yak_premade{
     emit:
     result_mom = yak_trioeval_mom.out.result
     result_dad = yak_trioeval_dad.out.result
+}
+
+workflow eval_gfastats{
+    take:
+    gfastats_noseq_hapA
+    gfastats_noseq_hapB
+
+    
+    main:
+    gfastats(gfastats_noseq_hapA, gfastats_noseq_hapB)
+    
+    emit:
+    gfastats_mom = gfastats.out.hapA_gfastats
+    gfastats_dad = gfastats.out.hapB_gfastats
 }

@@ -1,4 +1,4 @@
 .nextflow*
 work/
 results/
-params/
+temp
