@@ -7,8 +7,8 @@ process merqury{
     path(hap_dad_fastq)
     output:
     path("merqury_result*"), emit: result
-    path("merqury_result.${hap_mom_fastq.baseName}.ont.bp.p_ctg.100_20000.phased_block.stats"), emit : phased_stats_hapA
-    path("merqury_result.${hap_dad_fastq.baseName}.ont.bp.p_ctg.100_20000.phased_block.stats"), emit : phased_stats_hapB
+    path("merqury_result.${hap_mom_fastq.baseName}.100_20000.phased_block.stats"), emit : phased_stats_hapA
+    path("merqury_result.${hap_dad_fastq.baseName}.100_20000.phased_block.stats"), emit : phased_stats_hapB
     script:
     if (params.debug){
         """
