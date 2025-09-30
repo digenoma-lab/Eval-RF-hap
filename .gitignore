@@ -1,4 +1,8 @@
 .nextflow*
 work/
 results/
-temp
+temp/
+rfhap/
+trio_binning/
+hifiasm/
+

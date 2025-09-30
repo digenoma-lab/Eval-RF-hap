@@ -1,0 +1,141 @@
+---
+title: "more_coverage_statistic_v2.Rmd"
+output: html_document
+date: "2025-08-26"
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(janitor)
+library(stringr)
+library(tidyverse)
+library(patchwork)
+```
+
+```{r cars}
+hg00_wg=read.delim("new_stats.tsv", sep ="\t", header=TRUE)
+
+```
+
+```{r}
+hg00_wg = hg00_wg %>% mutate(
+  N50merqury = as.numeric(gsub("\\,","",N50merqury)),
+  Assembly=trimws(Assembly),
+  N50gfastats=as.numeric(N50gfastats),
+  AvgBlockSize = as.numeric(gsub(",","",AvgBlockSize))
+) %>%
+  mutate(
+    SwitchErrorMerqury=as.numeric(gsub("%","",SwitchErrorMerqury))
+  )
+```
+
+
+
+```{r}
+a = ggplot(hg00_wg, aes(x = Assembly, y = N50merqury, fill = Method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Dataset) +
+  labs(
+    title = "Merqury N50 corrected",
+    x = "Assembly",
+    y = "Merqury N50 corrected",
+    fill = "Method"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), title = element_text(size = 10) 
+  )
+a
+```
+
+```{r}
+b=ggplot(hg00_wg, aes(x = Assembly, y = AvgBlockSize, fill = Method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Dataset) +
+  labs(
+    title = "Merqury Avg Block Size",
+    x = "Assembly",
+    y = "Avg Block Size",
+    fill = "Method"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), title = element_text(size = 10)
+  )
+b
+```
+
+
+```{r}
+c=ggplot(hg00_wg, aes(x = Assembly, y = N50gfastats, fill = Method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Dataset) +
+  labs(
+    title = "N50 gfastats",
+    x = "Assembly",
+    y = "N50 gfastats",
+    fill = "Method"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), title = element_text(size = 10)
+  )
+c
+```
+
+####Errors
+
+```{r}
+e=ggplot(hg00_wg, aes(x = Assembly, y = SwitchErrorMerqury, fill = Method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = round(SwitchErrorMerqury, 2)),
+            position = position_dodge(width = 0.9),
+            vjust = -0.3,        # etiqueta encima de la barra
+            color = "black",
+            size = 2.5) +
+  facet_wrap(~Dataset) +
+  labs(
+    title = "Merqury Switch Error",
+    x = "Assembly",
+    y = "Merqury Switch Error",
+    fill = "Method"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), title = element_text(size = 10)
+  )
+
+e
+```
+
+```{r}
+f=ggplot(hg00_wg, aes(x = Assembly, y = SwitchErrorYak, fill = Method)) +
+  geom_bar(stat = "identity", position = "dodge") +
+   geom_text(aes(label = round(SwitchErrorYak, 2)),
+            position = position_dodge(width = 0.9),
+            vjust = -0.3,        # etiqueta encima de la barra
+            color = "black",
+            size = 2.5) +
+  facet_wrap(~Dataset) +
+  labs(
+    title = "Yak Switch Error",
+    x = "Assembly",
+    y = "Yak Switch Error",
+    fill = "Method"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),title = element_text(size = 10)
+  )
+
+f
+```
+
+```{r}
+g = (a | b | c) / ( e | f ) + plot_layout(guides = "collect")
+png("metrics.png", width = 2300 , height = 1800 , res = 180)
+g
+dev.off()
+```
+

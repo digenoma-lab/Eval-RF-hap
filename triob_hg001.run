@@ -1,0 +1,1 @@
+nextflow run main.nf -params-file params/trio_binning/hg001_triobinning.yaml -c nextflow.config -profile kutral -w trio_binning/v2/hg001/work --outdir trio_binning/v2/hg001/results
