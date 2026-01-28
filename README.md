@@ -1,6 +1,6 @@
 # Eval-RF-hap
 
-**Eval-RF-hap** is a [Nextflow](https://www.nextflow.io/) pipeline designed to evaluate the haplotyping performance of [RFhap](https://github.com/digenoma-lab/rfhap) (or whatever other model to separate haplotypes), sing sequencing data from a family trio (father, mother, and child). The pipeline focuses on assessing phasing accuracy using both long-read and short-read data.
+**Eval-RF-hap** is a [Nextflow](https://www.nextflow.io/) pipeline designed to evaluate the haplotyping performance of [RFhap](https://github.com/digenoma-lab/rfhap) (or whatever other model to separate haplotypes), using sequencing data from a family trio (father, mother, and child). The pipeline focuses on assessing phasing accuracy using both long-read and short-read data.
 
 This project is maintained by the [DiGenoma Lab](https://github.com/digenoma-lab).
 
