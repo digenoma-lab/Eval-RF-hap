@@ -70,7 +70,6 @@ Output file structure and formats depend on the modules executed.
 
 ## Notes
 
-- This pipeline is tailored for a specific Chilean trio dataset but can be adapted to others.
 - Make sure to install required tools or set up containerized environments (e.g. Docker or Singularity).
 - Contributions and issues are welcome.
 
