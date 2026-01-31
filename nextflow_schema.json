@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Eval-RF-hap pipeline parameters",
+  "description": "Pipeline for haplotype assembly evaluation with Merqury and/or Yak (trio-based phasing metrics).",
+  "type": "object",
+  "$defs": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "fa_icon": "fas fa-folder-open",
+      "description": "Output directory and pipeline mode.",
+      "properties": {
+        "outdir": {
+          "type": "string",
+          "default": "./temp",
+          "format": "directory-path",
+          "description": "Output directory for pipeline results.",
+          "fa_icon": "fas fa-folder-open"
+        }
+      }
+    },
+    "required_read_inputs": {
+      "title": "Required read inputs",
+      "type": "object",
+      "fa_icon": "fas fa-dna",
+      "description": "Short and long read inputs for the trio (dad, mom, child). Always required.",
+      "required": [
+        "dad_short_reads_R1",
+        "dad_short_reads_R2",
+        "mom_short_reads_R1",
+        "mom_short_reads_R2",
+        "child_short_reads_R1",
+        "child_short_reads_R2",
+        "child_long_reads",
+        "method",
+        "dataset"
+      ],
+      "properties": {
+        "dad_short_reads_R1": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to father short-read R1 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "dad_short_reads_R2": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to father short-read R2 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "mom_short_reads_R1": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to mother short-read R1 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "mom_short_reads_R2": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to mother short-read R2 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "child_short_reads_R1": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to child short-read R1 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "child_short_reads_R2": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to child short-read R2 (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "child_long_reads": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to child long reads (FASTQ).",
+          "fa_icon": "fas fa-file"
+        },
+        "method": {
+          "type": "string",
+          "description": "Method or phasing approach name (e.g. RFHap). Used in the output table.",
+          "fa_icon": "fas fa-tag"
+        },
+        "dataset": {
+          "type": "string",
+          "description": "Dataset or sample name (e.g. HG001). Used in the output table.",
+          "fa_icon": "fas fa-database"
+        }
+      }
+    },
+    "tool_options": {
+      "title": "Tool and skip options",
+      "type": "object",
+      "fa_icon": "fas fa-cogs",
+      "description": "Which evaluation tools to run and whether to use precomputed inputs.",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "default": "both",
+          "enum": ["yak", "merqury", "both"],
+          "description": "Evaluation tool(s): 'yak', 'merqury', or 'both'.",
+          "fa_icon": "fas fa-wrench"
+        },
+        "from_assembly": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, use precomputed assembly FASTA and GFA. If false, run assembly from haplotype IDs.",
+          "fa_icon": "fas fa-dna"
+        },
+        "from_yak": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, use precomputed Yak count files. If false, count kmers and then evaluate with Yak.",
+          "fa_icon": "fas fa-calculator"
+        },
+        "from_meryl": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, use precomputed Meryl count files. If false, count kmers and then run Merqury.",
+          "fa_icon": "fas fa-calculator"
+        }
+      }
+    },
+    "assembly_precomputed": {
+      "title": "Precomputed assembly (when from_assembly=true)",
+      "type": "object",
+      "fa_icon": "fas fa-archive",
+      "description": "Paths to precomputed maternal/paternal assemblies and GFA. Required when from_assembly=true.",
+      "properties": {
+        "hap_mom_fasta": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to maternal haplotype assembly (FASTA).",
+          "fa_icon": "fas fa-file-alt"
+        },
+        "hap_dad_fasta": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to paternal haplotype assembly (FASTA).",
+          "fa_icon": "fas fa-file-alt"
+        },
+        "gfa_noseq_hapA": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to maternal GFA (no sequence, for gfastats).",
+          "fa_icon": "fas fa-project-diagram"
+        },
+        "gfa_noseq_hapB": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to paternal GFA (no sequence, for gfastats).",
+          "fa_icon": "fas fa-project-diagram"
+        }
+      }
+    },
+    "assembly_from_ids": {
+      "title": "Assembly from haplotype IDs (when from_assembly=false)",
+      "type": "object",
+      "fa_icon": "fas fa-list",
+      "description": "Haplotype ID files to run hifiasm assembly. Required when from_assembly=false.",
+      "properties": {
+        "hap_mom_ids": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to maternal haplotype read IDs.",
+          "fa_icon": "fas fa-file"
+        },
+        "hap_dad_ids": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to paternal haplotype read IDs.",
+          "fa_icon": "fas fa-file"
+        },
+        "hap_unknown_ids": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to unknown/unphased haplotype read IDs.",
+          "fa_icon": "fas fa-file"
+        }
+      }
+    },
+    "yak_precomputed": {
+      "title": "Precomputed Yak (when tool includes yak and from_yak=true)",
+      "type": "object",
+      "fa_icon": "fas fa-database",
+      "description": "Precomputed Yak count files. Required when tool is 'yak' or 'both' and from_yak=true.",
+      "properties": {
+        "yak_mom": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to mother Yak count file.",
+          "fa_icon": "fas fa-file"
+        },
+        "yak_dad": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to father Yak count file.",
+          "fa_icon": "fas fa-file"
+        }
+      }
+    },
+    "meryl_precomputed": {
+      "title": "Precomputed Meryl (when tool includes merqury and from_meryl=true)",
+      "type": "object",
+      "fa_icon": "fas fa-database",
+      "description": "Precomputed Meryl count databases. Required when tool is 'merqury' or 'both' and from_meryl=true.",
+      "properties": {
+        "meryl_dad": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to father Meryl database.",
+          "fa_icon": "fas fa-file"
+        },
+        "meryl_mom": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to mother Meryl database.",
+          "fa_icon": "fas fa-file"
+        },
+        "meryl_child_sr": {
+          "type": "string",
+          "format": "file-path",
+          "description": "Path to child short-read Meryl database.",
+          "fa_icon": "fas fa-file"
+        }
+      }
+    }
+  },
+  "allOf": [
+    { "$ref": "#/$defs/input_output_options" },
+    { "$ref": "#/$defs/required_read_inputs" },
+    { "$ref": "#/$defs/tool_options" },
+    { "$ref": "#/$defs/assembly_precomputed" },
+    { "$ref": "#/$defs/assembly_from_ids" },
+    { "$ref": "#/$defs/yak_precomputed" },
+    { "$ref": "#/$defs/meryl_precomputed" }
+  ]
+}
